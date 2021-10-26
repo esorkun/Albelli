@@ -1,0 +1,15 @@
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\bin\Debug\net5.0\Albelli.DAL.deps.json
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\bin\Debug\net5.0\Albelli.DAL.dll
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\bin\Debug\net5.0\ref\Albelli.DAL.dll
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\bin\Debug\net5.0\Albelli.DAL.pdb
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\obj\Debug\net5.0\Albelli.DAL.csproj.AssemblyReference.cache
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\obj\Debug\net5.0\Albelli.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\obj\Debug\net5.0\Albelli.DAL.AssemblyInfoInputs.cache
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\obj\Debug\net5.0\Albelli.DAL.AssemblyInfo.cs
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\obj\Debug\net5.0\Albelli.DAL.csproj.CoreCompileInputs.cache
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\obj\Debug\net5.0\Albelli.DAL.dll
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\obj\Debug\net5.0\ref\Albelli.DAL.dll
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\obj\Debug\net5.0\Albelli.DAL.pdb
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\bin\Debug\net5.0\Albelli.DAL.runtimeconfig.json
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\bin\Debug\net5.0\Albelli.DAL.runtimeconfig.dev.json
+C:\Users\Elif\source\repos\Albelli\Albelli.DAL\Albelli.DAL\obj\Debug\net5.0\Albelli.DAL.genruntimeconfig.cache

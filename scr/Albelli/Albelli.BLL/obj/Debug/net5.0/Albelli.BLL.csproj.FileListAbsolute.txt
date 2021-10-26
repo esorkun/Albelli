@@ -1,0 +1,15 @@
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\bin\Debug\net5.0\Albelli.BLL.deps.json
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\bin\Debug\net5.0\Albelli.BLL.dll
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\bin\Debug\net5.0\ref\Albelli.BLL.dll
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\bin\Debug\net5.0\Albelli.BLL.pdb
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\obj\Debug\net5.0\Albelli.BLL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\obj\Debug\net5.0\Albelli.BLL.AssemblyInfoInputs.cache
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\obj\Debug\net5.0\Albelli.BLL.AssemblyInfo.cs
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\obj\Debug\net5.0\Albelli.BLL.csproj.CoreCompileInputs.cache
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\obj\Debug\net5.0\Albelli.BLL.dll
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\obj\Debug\net5.0\ref\Albelli.BLL.dll
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\obj\Debug\net5.0\Albelli.BLL.pdb
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\bin\Debug\net5.0\Albelli.DAL.dll
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\bin\Debug\net5.0\Albelli.DAL.pdb
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\obj\Debug\net5.0\Albelli.BLL.csproj.AssemblyReference.cache
+C:\Users\Elif\source\repos\Albelli\Albelli.BLL\obj\Debug\net5.0\Albelli.BLL.csproj.CopyComplete
