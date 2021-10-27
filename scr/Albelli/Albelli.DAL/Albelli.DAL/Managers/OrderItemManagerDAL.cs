@@ -7,14 +7,17 @@ using System.Threading.Tasks;
 
 namespace Albelli.DAL.Managers
 {
-    public class ProductManagerDAL
+    public class OrderItemManagerDAL
     {
-        public Product GetProductByProductType(string productType)
+        public OrderItem CreateOrderItem(OrderItem newOrderItem)
         {
             using (var dbContext = new AlbelliDbContext())
             {
-                return dbContext.Product.FirstOrDefault(x => x.ProductType == productType);
+                dbContext.OrderItem.Add(newOrderItem);
+                dbContext.SaveChanges();
             }
+
+            return newOrderItem;
         }
     }
 }

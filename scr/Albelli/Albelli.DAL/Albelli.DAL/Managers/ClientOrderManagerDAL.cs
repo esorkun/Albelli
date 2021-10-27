@@ -8,30 +8,30 @@ using System.Threading.Tasks;
 
 namespace Albelli.DAL.Managers
 {
-    public class OrderManagerDAL
+    public class ClientOrderManagerDAL
     {
-        public List<Orders> GetAllOrders()
+        public List<ClientOrder> GetAllOrders()
         {
             using (var dbContext = new AlbelliDbContext())
             {
-                return dbContext.Orders.ToList();
+                return dbContext.ClientOrder.ToList();
             }
         }
 
-        public Orders GetOrdersById(int orderId)
+        public ClientOrder GetOrderById(int orderId)
         {
             using (var dbContext = new AlbelliDbContext())
             {
-                return dbContext.Orders.FirstOrDefault(x => x.Id == orderId);
+                return dbContext.ClientOrder.FirstOrDefault(x => x.Id == orderId);
             }
         }
 
-        public Orders CreateOrder(Orders newOrder)
+        public ClientOrder CreateOrder(ClientOrder newOrder)
         {
 
             using (var dbContext = new AlbelliDbContext())
             {
-                dbContext.Orders.Add(newOrder);
+                dbContext.ClientOrder.Add(newOrder);
                 dbContext.SaveChanges();
             }
 

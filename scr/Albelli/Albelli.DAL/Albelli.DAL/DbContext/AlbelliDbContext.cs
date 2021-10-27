@@ -20,8 +20,10 @@ namespace Albelli.DAL
         {
         }
 
-        public virtual DbSet<Orders> Orders { get; set; }
-        public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<ClientOrder> ClientOrder { get; set; }
+        public virtual DbSet<OrderBag> OrderBag { get; set; }
+        public virtual DbSet<OrderItem> OrderItem { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,12 +36,40 @@ namespace Albelli.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Orders>(entity =>
+            modelBuilder.Entity<ClientOrder>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
-            modelBuilder.Entity<Products>(entity =>
+            modelBuilder.Entity<OrderBag>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderBag)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderBag_ClientOrder");
+
+                entity.HasOne(d => d.OrderItem)
+                    .WithMany(p => p.OrderBag)
+                    .HasForeignKey(d => d.OrderItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderBag_OrderItem");
+            });
+
+            modelBuilder.Entity<OrderItem>(entity =>
+            {
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.OrderItem)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderItem_Product");
+            });
+
+            modelBuilder.Entity<Product>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });

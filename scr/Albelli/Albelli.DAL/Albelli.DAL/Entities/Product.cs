@@ -9,15 +9,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Albelli.DAL.Entities
 {
-    public partial class Products
+    public partial class Product
     {
+        public Product()
+        {
+            OrderItem = new HashSet<OrderItem>();
+        }
+
         [Key]
         public int Id { get; set; }
         [Required]
-        [StringLength(20)]
+        [StringLength(36)]
         public string ProductType { get; set; }
         [Column(TypeName = "numeric(18, 0)")]
         public decimal Width { get; set; }
         public int StackabilityLimit { get; set; }
+
+        [InverseProperty("Product")]
+        public virtual ICollection<OrderItem> OrderItem { get; set; }
     }
 }

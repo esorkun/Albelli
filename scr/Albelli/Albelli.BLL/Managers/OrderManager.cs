@@ -14,43 +14,58 @@ namespace Albelli.BLL
 {
     public class OrderManager
     {
-        private Albelli.DAL.Managers.OrderManagerDAL _DAL_Orders;
+        private Albelli.DAL.Managers.ClientOrderManagerDAL _DAL_Orders;
         private Mapper _orderMapper;
 
         public OrderManager()
         {
-            _DAL_Orders = new OrderManagerDAL();
+            _DAL_Orders = new ClientOrderManagerDAL();
 
-            var _configOrder = new MapperConfiguration(cfg => cfg.CreateMap<Orders, Order>().ReverseMap());
+            var _configOrder = new MapperConfiguration(cfg => cfg.CreateMap<ClientOrder, OrderModel>().ReverseMap());
             _orderMapper = new Mapper(_configOrder);
         }
 
-        public List<Order> GetAllOrders()
+        public List<OrderModel> GetAllOrders()
         {
-            List<Orders> ordersFromDB = _DAL_Orders.GetAllOrders();
-            List<Order> ordersList = _orderMapper.Map<List<Orders>, List<Order>>(ordersFromDB);
+            List<ClientOrder> ordersFromDB = _DAL_Orders.GetAllOrders();
+            List<OrderModel> ordersList = _orderMapper.Map<List<ClientOrder>, List<OrderModel>>(ordersFromDB);
 
             return ordersList;
         }
 
-        public Order CreateOrder(Order orderRequest)
+        public OrderModel GetOrderById(int orderId)
         {
+            ClientOrder orderFromDB = _DAL_Orders.GetOrderById(orderId);
+            OrderModel ordersList = _orderMapper.Map<ClientOrder,OrderModel>(orderFromDB);
 
-            foreach (OrderItem orderItemRequest in orderRequest.OrderItems)
-            {
-                ProductManager productManager = new ProductManager(); 
-                Product selectedProduct = productManager.GetProductByName(orderItemRequest.ProductType);
+            return ordersList;
+        }
 
-                orderItemRequest.Product = selectedProduct;
-            }
+        public OrderModel CreateOrder(OrderModel orderRequest)
+        {
+            ProductManager productManager = new ProductManager();
+            OrderItemManager orderItemManager = new OrderItemManager();
+            OrderBagManager orderBagManager = new OrderBagManager();
+
+            // Get Products from DB for all OrderItems
+            orderRequest.OrderItems.Select(x => { x.Product = productManager.GetProductByName(x.ProductType); return x; }).ToList();
+
+            orderRequest.OrderItems.Select(x => { x.ProductId = x.Product.Id; return x; }).ToList();
 
             orderRequest.CalculateRequiredBinWidth();
 
-            Orders newOrders = _orderMapper.Map<Order, Orders>(orderRequest);
+            ClientOrder newOrders = _orderMapper.Map<OrderModel, ClientOrder>(orderRequest);
 
+            ClientOrder order = _DAL_Orders.CreateOrder(newOrders);
+            orderRequest.Id = order.Id;
 
-            Orders orders = _DAL_Orders.CreateOrder(newOrders);
-            orderRequest.Id = orders.Id;
+            foreach (var orderItem in orderRequest.OrderItems)
+            {
+                OrderItemModel recordedOrderItem = orderItemManager.CreateOrderItem(orderItem);
+
+                OrderBagModel newOrderBag = new OrderBagModel(orderRequest, recordedOrderItem);
+                OrderBag recordedOrderBag = orderBagManager.CreateOrderBag(newOrderBag);
+            }
 
             return orderRequest;
         }

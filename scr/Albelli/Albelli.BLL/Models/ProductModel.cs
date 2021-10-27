@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Albelli.BLL.Models
 {
-    public class Product
+    public class ProductModel
     {
         internal int Id { get; set; }
         public string ProductType { get; set; }
         public decimal Width { get; set; }
         public int StackabilityLimit { get; set; }
-        public Product()
+        public ProductModel()
         {
 
         }

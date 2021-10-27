@@ -6,22 +6,23 @@ using System.Threading.Tasks;
 
 namespace Albelli.BLL.Models
 {
-    public class Order
+    public class OrderModel
     {
         public int Id { get; set; }
         public decimal RequiredBinWidth { get; internal set; }
 
-        public virtual ICollection<OrderItem> OrderItems { get; set; }
+        public virtual ICollection<OrderItemModel> OrderItems { get; set; }
 
-        public Order()
+        public OrderModel()
         {
 
         }
 
         public void CalculateRequiredBinWidth()
         {
-            decimal binWith = 0;
+            decimal binWidth = 0;
 
+            // check if same product added multiple times
             var orderItemsGroupByProductType = this.OrderItems.GroupBy(x => x.ProductType);
 
             foreach (var orderItems in orderItemsGroupByProductType)
@@ -29,22 +30,23 @@ namespace Albelli.BLL.Models
                 foreach (var item in orderItems)
                 {
                     if (item.Product.StackabilityLimit == 1)
-                        binWith += item.Product.Width * item.Quantity;
+                        binWidth += item.Product.Width * item.Quantity;
                     else
                     {
+                        // effect of the Stackable Products on RequiredBinWidth
                         int remainder;
                         int quotient = Math.DivRem(item.Quantity, item.Product.StackabilityLimit, out remainder);
 
-                        binWith += item.Product.Width * quotient;
+                        binWidth += item.Product.Width * quotient;
 
                         if (0 != remainder)
-                            binWith += item.Product.Width;
+                            binWidth += item.Product.Width;
                     }
                 }
                     
             }
 
-            this.RequiredBinWidth = binWith;
+            this.RequiredBinWidth = binWidth;
         }
     }
 }

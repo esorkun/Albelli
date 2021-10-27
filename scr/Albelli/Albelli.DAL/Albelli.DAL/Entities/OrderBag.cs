@@ -9,11 +9,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Albelli.DAL.Entities
 {
-    public partial class Orders
+    public partial class OrderBag
     {
         [Key]
         public int Id { get; set; }
-        [Column(TypeName = "numeric(18, 0)")]
-        public decimal RequiredBinWidth { get; set; }
+        public int OrderId { get; set; }
+        public int OrderItemId { get; set; }
+
+        [ForeignKey(nameof(OrderId))]
+        [InverseProperty(nameof(ClientOrder.OrderBag))]
+        public virtual ClientOrder Order { get; set; }
+        [ForeignKey(nameof(OrderItemId))]
+        [InverseProperty("OrderBag")]
+        public virtual OrderItem OrderItem { get; set; }
     }
 }

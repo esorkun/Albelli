@@ -20,14 +20,20 @@ namespace Albelli.BLL.Managers
         {
             _DAL_Products = new ProductManagerDAL();
 
-            var _configProducts = new MapperConfiguration(cfg => cfg.CreateMap<Products, Product>().ReverseMap());
+            var _configProducts = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductModel>().ReverseMap());
             _productMapper = new Mapper(_configProducts);
         }
 
-        public Product GetProductByName(string productType)
+        public ProductModel GetProductByName(string productType)
         {
-            Products productsDAL = _DAL_Products.GetProductByName(productType);
-            Product productDAL = _productMapper.Map<Products, Product>(productsDAL);
+            Product productsDAL = _DAL_Products.GetProductByProductType(productType);
+
+            //if (null == productsDAL)
+            //    throw new InvalidOperationException(String.Format("Invalid Product Type : {0}",
+            //             productType));
+
+
+            ProductModel productDAL = _productMapper.Map<Product, ProductModel>(productsDAL);
             return productDAL;
         }
     }

@@ -22,16 +22,23 @@ namespace Albelli.WebAPI.Controllers
 
         [HttpGet]
         [Route("getAllOrders")]
-        public List<Order> GetAllOrders()
+        public List<OrderModel> GetAllOrders()
         {
             return _orderManagerBLL.GetAllOrders();
         }
 
+        [HttpGet]
+        [Route("getOrderById/{orderId}")]
+        public OrderModel GetOrderById(int orderId)
+        {
+            return _orderManagerBLL.GetOrderById(orderId);
+        }
+
         [HttpPost]
         [Route("createOrder")]
-        public Order CreateOrder([FromBody] Order newOrder)
+        public OrderModel CreateOrder([FromBody] OrderModel newOrder)
         {
-            Order storedOrder = _orderManagerBLL.CreateOrder(newOrder);
+            OrderModel storedOrder = _orderManagerBLL.CreateOrder(newOrder);
             return storedOrder;
         }
 
