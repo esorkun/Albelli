@@ -1,19 +1,20 @@
-# Web API Development by Using the Three-layer Architecture (C#)
+# Web API Development 
+# by Using the Three-layer Architecture (C#)
 
 "This code is a sample code for web API development and prepared for 'Albelli .NET Software Engineer Technical Assignment'."
 
 Source of the Assignment : https://github.com/albumprinter/dotnet-engineer-assignment
 
-ALBELLI ASSIGMENT :
+#ALBELLI ASSIGMENT :
 
-Business flow
+## Business flow
 A customer can order 1 or multiple items.
 For example, an order could consist of a photo book and 2 canvases.
 After the order is produced, it is delivered to one out of thousands of pickup points across the country.
 The package is put in a bin on a shelf at the pickup point. The bin has to be sufficiently wide for the package.
 Since bins are reserved upfront, we need to calculate the minimum bin width required for the order at the moment of order creation.
 
-Assignment
+## Assignment
 Create a .NET Web API that accepts an order, stores it, and responds with the minimum bin width.
 We also should be able to get back all the information that is known about the order by its ID.
 Cover code with tests where you find it important.
