@@ -1,5 +1,5 @@
 # Web API Development 
-# by Using the Three-layer Architecture (C#)
+by Using the Three-layer Architecture (C#)
 
 "This code is a sample code for web API development and prepared for 'Albelli .NET Software Engineer Technical Assignment'."
 
