@@ -1,13 +1,7 @@
 ﻿using Albelli.BLL.Models;
-using Albelli.DAL;
 using Albelli.DAL.Entities;
 using Albelli.DAL.Managers;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Albelli.BLL.Managers
 {
@@ -28,10 +22,13 @@ namespace Albelli.BLL.Managers
         {
             Product productsDAL = _DAL_Products.GetProductByProductType(productType);
 
-            //if (null == productsDAL)
-            //    throw new InvalidOperationException(String.Format("Invalid Product Type : {0}",
-            //             productType));
+            ProductModel productDAL = _productMapper.Map<Product, ProductModel>(productsDAL);
+            return productDAL;
+        }
 
+        public ProductModel GetProductById(int productId)
+        {
+            Product productsDAL = _DAL_Products.GetProductById(productId);
 
             ProductModel productDAL = _productMapper.Map<Product, ProductModel>(productsDAL);
             return productDAL;

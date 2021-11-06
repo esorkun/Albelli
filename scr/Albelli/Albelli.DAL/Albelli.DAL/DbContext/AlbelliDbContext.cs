@@ -21,7 +21,6 @@ namespace Albelli.DAL
         }
 
         public virtual DbSet<ClientOrder> ClientOrder { get; set; }
-        public virtual DbSet<OrderBag> OrderBag { get; set; }
         public virtual DbSet<OrderItem> OrderItem { get; set; }
         public virtual DbSet<Product> Product { get; set; }
 
@@ -41,26 +40,15 @@ namespace Albelli.DAL
                 entity.Property(e => e.Id).ValueGeneratedNever();
             });
 
-            modelBuilder.Entity<OrderBag>(entity =>
-            {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.OrderBag)
-                    .HasForeignKey(d => d.OrderId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderBag_ClientOrder");
-
-                entity.HasOne(d => d.OrderItem)
-                    .WithMany(p => p.OrderBag)
-                    .HasForeignKey(d => d.OrderItemId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderBag_OrderItem");
-            });
-
             modelBuilder.Entity<OrderItem>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.HasOne(d => d.ClientOrder)
+                    .WithMany(p => p.OrderItem)
+                    .HasForeignKey(d => d.ClientOrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderItem_ClientOrder");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderItem)

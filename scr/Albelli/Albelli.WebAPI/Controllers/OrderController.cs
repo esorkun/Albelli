@@ -36,10 +36,21 @@ namespace Albelli.WebAPI.Controllers
 
         [HttpPost]
         [Route("createOrder")]
-        public OrderModel CreateOrder([FromBody] OrderModel newOrder)
+        public ActionResult<OrderModel> CreateOrder([FromBody] OrderModel newOrder)
         {
-            OrderModel storedOrder = _orderManagerBLL.CreateOrder(newOrder);
-            return storedOrder;
+            try
+            {
+                OrderModel order = _orderManagerBLL.CreateOrder(newOrder);
+                return Ok(order);
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
     }

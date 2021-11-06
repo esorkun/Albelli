@@ -11,20 +11,20 @@ namespace Albelli.DAL.Entities
 {
     public partial class OrderItem
     {
-        public OrderItem()
-        {
-            OrderBag = new HashSet<OrderBag>();
-        }
-
         [Key]
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int? Id { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
+        public int ClientOrderId { get; set; }
 
         [ForeignKey(nameof(ProductId))]
         [InverseProperty("OrderItem")]
         public virtual Product Product { get; set; }
+
+        [ForeignKey(nameof(ClientOrderId))]
         [InverseProperty("OrderItem")]
-        public virtual ICollection<OrderBag> OrderBag { get; set; }
+        public virtual ClientOrder ClientOrder { get; set; }
+
     }
 }

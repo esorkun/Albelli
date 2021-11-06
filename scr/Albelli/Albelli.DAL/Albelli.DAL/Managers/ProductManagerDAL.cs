@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Albelli.DAL.Managers
 {
@@ -14,6 +14,14 @@ namespace Albelli.DAL.Managers
             using (var dbContext = new AlbelliDbContext())
             {
                 return dbContext.Product.FirstOrDefault(x => x.ProductType == productType);
+            }
+        }
+
+        public Product GetProductById(int productId)
+        {
+            using (var dbContext = new AlbelliDbContext())
+            {
+                return dbContext.Product.FirstOrDefault(x => x.Id == productId);
             }
         }
     }

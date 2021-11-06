@@ -8,7 +8,7 @@ namespace Albelli.BLL.Models
 {
     public class ProductModel
     {
-        internal int Id { get; set; }
+        public int Id { get; internal set; }
         public string ProductType { get; set; }
         public decimal Width { get; set; }
         public int StackabilityLimit { get; set; }

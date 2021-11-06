@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Albelli.BLL.Models
 {
     public class OrderModel
     {
         public int Id { get; set; }
-        public decimal RequiredBinWidth { get; internal set; }
-
-        public virtual ICollection<OrderItemModel> OrderItems { get; set; }
-
+        public decimal RequiredBinWidth { get; private set; }
+        public virtual ICollection<OrderItemModel> OrderItem { get; set; }
         public OrderModel()
         {
 
@@ -22,8 +19,8 @@ namespace Albelli.BLL.Models
         {
             decimal binWidth = 0;
 
-            // check if same product added multiple times
-            var orderItemsGroupByProductType = this.OrderItems.GroupBy(x => x.ProductType);
+            // check if the same product added multiple times
+            var orderItemsGroupByProductType = this.OrderItem.GroupBy(x => x.ProductType);
 
             foreach (var orderItems in orderItemsGroupByProductType)
             {

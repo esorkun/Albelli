@@ -8,9 +8,8 @@ namespace Albelli.BLL.Models
 {
     public class OrderItemModel
     {
-        internal int Id { get; set; }
+        internal int ClientOrderId { get; set; }
         public int Quantity { get; set; }
-        public int ProductId { get; set; }
         public string ProductType { get; set; }
         internal ProductModel Product { get; set; }
 
@@ -18,5 +17,6 @@ namespace Albelli.BLL.Models
         {
         }
 
+        
     }
 }

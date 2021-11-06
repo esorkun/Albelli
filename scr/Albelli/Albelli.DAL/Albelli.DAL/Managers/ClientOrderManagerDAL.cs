@@ -1,5 +1,6 @@
 ﻿using Albelli.DAL;
 using Albelli.DAL.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Albelli.DAL.Managers
 {
     public class ClientOrderManagerDAL
     {
-        public List<ClientOrder> GetAllOrders()
+        public List<ClientOrder> GetAllClientOrders()
         {
             using (var dbContext = new AlbelliDbContext())
             {
@@ -28,7 +29,6 @@ namespace Albelli.DAL.Managers
 
         public ClientOrder CreateOrder(ClientOrder newOrder)
         {
-
             using (var dbContext = new AlbelliDbContext())
             {
                 dbContext.ClientOrder.Add(newOrder);

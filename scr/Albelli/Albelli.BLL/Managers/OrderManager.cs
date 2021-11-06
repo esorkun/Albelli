@@ -1,13 +1,10 @@
 ﻿using Albelli.BLL.Models;
 using Albelli.BLL.Managers;
 using Albelli.DAL.Managers;
-using Albelli.DAL;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Albelli.DAL.Entities;
 
 namespace Albelli.BLL
@@ -15,56 +12,99 @@ namespace Albelli.BLL
     public class OrderManager
     {
         private Albelli.DAL.Managers.ClientOrderManagerDAL _DAL_Orders;
+        private OrderItemManager orderItemManager;
+        private ProductManager productManager;
         private Mapper _orderMapper;
 
         public OrderManager()
         {
             _DAL_Orders = new ClientOrderManagerDAL();
 
-            var _configOrder = new MapperConfiguration(cfg => cfg.CreateMap<ClientOrder, OrderModel>().ReverseMap());
+            orderItemManager = new OrderItemManager();
+            productManager = new ProductManager();
+
+            var _configOrder = new MapperConfiguration(cfg => cfg.CreateMap<OrderModel, ClientOrder>().ForMember(dest => dest.OrderItem, opt => opt.Ignore()).ReverseMap());
             _orderMapper = new Mapper(_configOrder);
+
         }
 
-        public List<OrderModel> GetAllOrders()
+        private OrderModel FillOrderWithItems(OrderModel order)
         {
-            List<ClientOrder> ordersFromDB = _DAL_Orders.GetAllOrders();
-            List<OrderModel> ordersList = _orderMapper.Map<List<ClientOrder>, List<OrderModel>>(ordersFromDB);
+            // Get orderItems of the order
+            order.OrderItem = orderItemManager.GetOrderItemsByOrderId(order.Id);
 
-            return ordersList;
+            // Get products of the order item
+            order.OrderItem.Select(x => { x.Product = productManager.GetProductById(x.Product.Id); return x; }).ToList();
+
+            // Set productTypes of the order
+            order.OrderItem.ToList().ForEach(o => { o.ProductType = o.Product.ProductType; });
+
+            return order;
         }
+
+
 
         public OrderModel GetOrderById(int orderId)
         {
             ClientOrder orderFromDB = _DAL_Orders.GetOrderById(orderId);
-            OrderModel ordersList = _orderMapper.Map<ClientOrder,OrderModel>(orderFromDB);
+            OrderModel order = _orderMapper.Map<ClientOrder, OrderModel>(orderFromDB);
+
+            // Fill order information with items (OrderItem and Product Info)
+            FillOrderWithItems(order);
+
+            return order;
+        }
+
+        public List<OrderModel> GetAllOrders()
+        {
+            List<ClientOrder> ordersFromDB = _DAL_Orders.GetAllClientOrders();
+            List<OrderModel> ordersList = _orderMapper.Map<List<ClientOrder>, List<OrderModel>>(ordersFromDB);
+
+            ordersList.ToList().ForEach(x => FillOrderWithItems(x));
 
             return ordersList;
         }
 
+        public OrderModel CheckOrderExistById(int orderId)
+        {
+            ClientOrder orderFromDB = _DAL_Orders.GetOrderById(orderId);
+            OrderModel order = _orderMapper.Map<ClientOrder, OrderModel>(orderFromDB);
+
+            return order;
+        }
+
+
+
+
         public OrderModel CreateOrder(OrderModel orderRequest)
         {
-            ProductManager productManager = new ProductManager();
-            OrderItemManager orderItemManager = new OrderItemManager();
-            OrderBagManager orderBagManager = new OrderBagManager();
+            // Validation : Check if the order Id valid
+            if (null != CheckOrderExistById(orderRequest.Id))
+                throw new InvalidOperationException("This order is already exists. Please change the OrderId.");
 
-            // Get Products from DB for all OrderItems
-            orderRequest.OrderItems.Select(x => { x.Product = productManager.GetProductByName(x.ProductType); return x; }).ToList();
+            // Validation : Check if the quantities valid
+            if (orderRequest.OrderItem.Any(x => x.Quantity <= 0))
+                throw new InvalidOperationException("Invalid quantity.");
 
-            orderRequest.OrderItems.Select(x => { x.ProductId = x.Product.Id; return x; }).ToList();
+            // Get Products of the orderItems from DB. 
+            orderRequest.OrderItem.Select(x => { x.Product = productManager.GetProductByName(x.ProductType); return x; }).ToList();
+
+            // Validation : If any of the products are not on the list, then return "Bad Request" message.
+            if (orderRequest.OrderItem.Any(x => x.Product == null))
+                throw new InvalidOperationException("Invalid product type.");
 
             orderRequest.CalculateRequiredBinWidth();
 
-            ClientOrder newOrders = _orderMapper.Map<OrderModel, ClientOrder>(orderRequest);
+            // Create ClientOrder record
+            ClientOrder clientOrder = _orderMapper.Map<OrderModel, ClientOrder>(orderRequest);
+            _DAL_Orders.CreateOrder(clientOrder);
 
-            ClientOrder order = _DAL_Orders.CreateOrder(newOrders);
-            orderRequest.Id = order.Id;
-
-            foreach (var orderItem in orderRequest.OrderItems)
+            // Create OrderItem record
+            foreach (var item in orderRequest.OrderItem)
             {
-                OrderItemModel recordedOrderItem = orderItemManager.CreateOrderItem(orderItem);
-
-                OrderBagModel newOrderBag = new OrderBagModel(orderRequest, recordedOrderItem);
-                OrderBag recordedOrderBag = orderBagManager.CreateOrderBag(newOrderBag);
+                //item.ProductId = item.Product.Id;
+                item.ClientOrderId = orderRequest.Id;
+                orderItemManager.CreateOrderItem(item);
             }
 
             return orderRequest;

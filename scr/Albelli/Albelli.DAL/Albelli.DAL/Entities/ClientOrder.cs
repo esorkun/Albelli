@@ -13,15 +13,16 @@ namespace Albelli.DAL.Entities
     {
         public ClientOrder()
         {
-            OrderBag = new HashSet<OrderBag>();
+            OrderItem = new HashSet<OrderItem>();
         }
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         [Column(TypeName = "numeric(18, 0)")]
         public decimal RequiredBinWidth { get; set; }
 
-        [InverseProperty("Order")]
-        public virtual ICollection<OrderBag> OrderBag { get; set; }
+        [InverseProperty("ClientOrder")]
+        public virtual ICollection<OrderItem> OrderItem { get; set; }
     }
 }
