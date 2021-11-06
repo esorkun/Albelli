@@ -4,7 +4,7 @@
 
 Source of the Assignment : https://github.com/albumprinter/dotnet-engineer-assignment
 
-#ALBELLI ASSIGMENT :
+ALBELLI ASSIGNMENT :
 
 ## Business flow
 A customer can order 1 or multiple items.
