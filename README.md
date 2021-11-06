@@ -32,6 +32,7 @@ For example, 1 photo book (0), 2 calendars (|) and 1 mug (.) should look like th
 
 But a mug has 1 detail: it can be stacked onto each other (up to 4 in a stack). So, an order with 1 photo book, 2 calendars, and 2 mugs should be positioned like this: [0||:]
 
+
 So the width of the 2 packages above is exactly the same. It would be still the same even if we add 2 more mugs (4 in total) but would increase if we add a 5th mug.
 
 Package width occupied by 1 product unit per type:
@@ -41,3 +42,5 @@ Package width occupied by 1 product unit per type:
 1 canvas — 16 mm
 1 set of greeting cards — 4.7 mm
 1 mug — 94 mm
+
+
