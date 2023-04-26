@@ -23,6 +23,8 @@ namespace Albelli.WebAPI
 
                     // test main -1
                     webBuilder.UseStartup<Startup>();
+
+                    // test main -2
                 });
     }
 }
