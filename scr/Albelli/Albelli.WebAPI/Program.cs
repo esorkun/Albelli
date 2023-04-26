@@ -20,6 +20,8 @@ namespace Albelli.WebAPI
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+
+                    // test main -1
                     webBuilder.UseStartup<Startup>();
                 });
     }
